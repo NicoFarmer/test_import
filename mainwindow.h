@@ -28,13 +28,20 @@ private:
     void video_worker_init(QString video_source);
 signals:
     void operate(tVideoInput param);
+    void stopWork();
+
 public slots:
     void videoHandleResults(tVideoResult result);
     void videoThreadStopped();
+    void videoWorkStarted();
+    void videoWorkFinished();
 
 public slots :
-    void startVideoThread();
-    void stopVideoThread();
+    void startVideoWork();
+    void stopVideoWork();
+
+    void initVideoThread();
+    void killVideoThread();
 };
 
 #endif // MAINWINDOW_H

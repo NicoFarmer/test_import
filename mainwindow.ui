@@ -6,45 +6,57 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>400</width>
-    <height>318</height>
+    <width>507</width>
+    <height>385</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
   <widget class="QWidget" name="centralWidget">
-   <widget class="QPushButton" name="start">
+   <widget class="QPushButton" name="start_work">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>10</y>
+      <y>150</y>
       <width>89</width>
       <height>25</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Commence le job&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="text">
-     <string>start</string>
+     <string>start work</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="stop">
+   <widget class="QPushButton" name="stop_work">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>180</x>
-      <y>40</y>
+      <y>180</y>
       <width>89</width>
       <height>25</height>
      </rect>
     </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Emet une requête d'arrêt du job&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
     <property name="text">
-     <string>stop</string>
+     <string>stop work</string>
     </property>
    </widget>
    <widget class="QDoubleSpinBox" name="in_data1">
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>10</y>
+      <y>150</y>
       <width>69</width>
       <height>26</height>
      </rect>
@@ -60,7 +72,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>10</y>
+      <y>150</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -73,7 +85,7 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>40</y>
+      <y>180</y>
       <width>69</width>
       <height>26</height>
      </rect>
@@ -89,7 +101,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>40</y>
+      <y>180</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -102,7 +114,7 @@
     <property name="geometry">
      <rect>
       <x>100</x>
-      <y>70</y>
+      <y>210</y>
       <width>69</width>
       <height>26</height>
      </rect>
@@ -118,7 +130,7 @@
     <property name="geometry">
      <rect>
       <x>20</x>
-      <y>70</y>
+      <y>210</y>
       <width>67</width>
       <height>17</height>
      </rect>
@@ -127,10 +139,10 @@
      <string>in_data3</string>
     </property>
    </widget>
-   <widget class="QLed" name="thread_status">
+   <widget class="QLed" name="work_status">
     <property name="geometry">
      <rect>
-      <x>140</x>
+      <x>320</x>
       <y>210</y>
       <width>31</width>
       <height>31</height>
@@ -159,8 +171,8 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>100</y>
-      <width>271</width>
+      <y>240</y>
+      <width>461</width>
       <height>16</height>
      </rect>
     </property>
@@ -172,7 +184,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>150</y>
+      <y>290</y>
       <width>71</width>
       <height>17</height>
      </rect>
@@ -185,7 +197,7 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>120</y>
+      <y>260</y>
       <width>69</width>
       <height>26</height>
      </rect>
@@ -207,7 +219,7 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>120</y>
+      <y>260</y>
       <width>71</width>
       <height>17</height>
      </rect>
@@ -220,7 +232,7 @@
     <property name="geometry">
      <rect>
       <x>90</x>
-      <y>150</y>
+      <y>290</y>
       <width>69</width>
       <height>26</height>
      </rect>
@@ -241,34 +253,21 @@
    <widget class="QLabel" name="label_7">
     <property name="geometry">
      <rect>
-      <x>10</x>
+      <x>190</x>
       <y>210</y>
       <width>131</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>thread in progress</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line_2">
-    <property name="geometry">
-     <rect>
-      <x>213</x>
-      <y>110</y>
-      <width>20</width>
-      <height>131</height>
-     </rect>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Vertical</enum>
+     <string>work in progress</string>
     </property>
    </widget>
    <widget class="QLabel" name="label_8">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>120</y>
+      <x>10</x>
+      <y>0</y>
       <width>161</width>
       <height>20</height>
      </rect>
@@ -280,11 +279,90 @@
    <widget class="QListWidget" name="video_devices_list">
     <property name="geometry">
      <rect>
-      <x>230</x>
-      <y>140</y>
+      <x>10</x>
+      <y>20</y>
       <width>161</width>
       <height>101</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="kill_thread">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>90</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Termine puis tue le thread&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>kill thread</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="init_thread">
+    <property name="geometry">
+     <rect>
+      <x>180</x>
+      <y>20</y>
+      <width>89</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Initialise le thread avec la source vidéo sélectionnée&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <property name="text">
+     <string>init thread</string>
+    </property>
+   </widget>
+   <widget class="QComboBox" name="list_algo">
+    <property name="enabled">
+     <bool>false</bool>
+    </property>
+    <property name="geometry">
+     <rect>
+      <x>280</x>
+      <y>150</y>
+      <width>191</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="toolTip">
+     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Choix de l'algo vidéo à exécuter&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+    </property>
+    <item>
+     <property name="text">
+      <string>VIDEO_ALGO1</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>VIDEO_ALGO2</string>
+     </property>
+    </item>
+    <item>
+     <property name="text">
+      <string>VIDEO_ALGO_DUMMY</string>
+     </property>
+    </item>
+   </widget>
+   <widget class="Line" name="line_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>130</y>
+      <width>461</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="orientation">
+     <enum>Qt::Horizontal</enum>
     </property>
    </widget>
   </widget>
@@ -293,7 +371,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>400</width>
+     <width>507</width>
      <height>22</height>
     </rect>
    </property>
