@@ -14,10 +14,14 @@ MainWindow::MainWindow(QWidget *parent) :
     connect(ui->stop_work, SIGNAL(released()), this, SLOT(stopVideoWork()));
     connect(ui->init_thread, SIGNAL(released()), this, SLOT(initVideoThread()));
     connect(ui->kill_thread, SIGNAL(released()), this, SLOT(killVideoThread()));
+    connect(ui->active_debug, SIGNAL(toggled(bool)), this, SLOT(activeDebug(bool)));
+
+    ui->active_debug->setChecked(true);
 }
 
 MainWindow::~MainWindow()
 {
+    stopVideoWork();
     killVideoThread();
     delete ui;
 }
@@ -158,4 +162,9 @@ void MainWindow::stopVideoWork()
 {
     qDebug() << "UI Stop work";
     if (m_video_worker) m_video_worker->stopWork();
+}
+
+void MainWindow::activeDebug(bool on_off)
+{
+    if (m_video_worker) m_video_worker->activeDebug(on_off);
 }

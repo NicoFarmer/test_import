@@ -41,11 +41,13 @@ class VideoWorker : public QObject
 {
     Q_OBJECT
 public :
+    VideoWorker();
     void init(QString video_name);
 
 private :
     QString m_video_name;
     bool m_stop_work_request;
+    bool m_dbg_active;
 
 // AJOUTE PAR LAGUICHE --------------------------
     cv::VideoCapture * capture;
@@ -58,6 +60,7 @@ private :
 public slots:
     void doWork(tVideoInput parameter);
     void stopWork();
+    void activeDebug(bool on_off=true);
 
 signals:
     void resultReady(tVideoResult result);

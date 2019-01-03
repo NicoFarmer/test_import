@@ -42,6 +42,8 @@ public slots :
 
     void initVideoThread();
     void killVideoThread();
+
+    void activeDebug(bool on_off);
 };
 
 #endif // MAINWINDOW_H

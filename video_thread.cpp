@@ -4,6 +4,25 @@
 
 // ======================================================
 // ======================================================
+VideoWorker::VideoWorker()
+    : m_dbg_active(true)
+{
+
+}
+
+void VideoWorker::stopWork()
+{
+    m_stop_work_request = true;
+    qDebug() << "VideoWorker::stopWork Stop requested !";
+}
+
+void VideoWorker::activeDebug(bool on_off)
+{
+    m_dbg_active = on_off;
+}
+
+// ======================================================
+// ======================================================
 void VideoWorker::init(QString video_name)
 {
     m_video_name = video_name;
@@ -25,15 +44,7 @@ void VideoWorker::init(QString video_name)
          qDebug() << endl << "Caméra inopérante :-(" << endl;
 }
 
-void VideoWorker::stopWork()
-{
-    m_stop_work_request = true;
-    qDebug() << "VideoWorker::stopWork Stop requested !";
-}
-
-
-// ======================================================
-// ======================================================
+// _________________________________________________________________
 void VideoWorker::doWork(tVideoInput parameter) {
     m_stop_work_request = false;
 
@@ -66,7 +77,6 @@ void VideoWorker::doWork(tVideoInput parameter) {
 
 
 // ========================================================
-// _________________________________________________________________
 void VideoWorker::_video_process_algo1(tVideoInput parameter)
 {
     tVideoResult result;
@@ -91,11 +101,14 @@ void VideoWorker::_video_process_algo1(tVideoInput parameter)
         std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
         cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
         cv::aruco::detectMarkers(inputImage, dictionary, markerCorners, markerIds);
-        if (markerIds.size() > 0)
-            cv::aruco::drawDetectedMarkers(m_frameCloned, markerCorners, markerIds);
+        if (m_dbg_active)
+        {
+            if (markerIds.size() > 0)
+                cv::aruco::drawDetectedMarkers(m_frameCloned, markerCorners, markerIds);
 
-        //on affiche l'image traitée
-        cv::imshow("capture",m_frameCloned);
+            //on affiche l'image traitée
+            cv::imshow("capture",m_frameCloned);
+        }
         QThread::msleep(5);
         inputImage.release();
 
@@ -131,6 +144,8 @@ void VideoWorker::_video_process_dummy(tVideoInput parameter)
         result.result1 = parameter.data1;
         result.result2 += parameter.data3 + 0.1 ;
         emit resultReady(result);
-        qDebug() << "Thread is still running" << ((float)i/total_count)*100. << "%";
+        if (m_dbg_active) {
+            qDebug() << "Thread is still running" << ((float)i/total_count)*100. << "%";
+        }
     }
 }
