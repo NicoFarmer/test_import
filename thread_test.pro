@@ -36,3 +36,5 @@ FORMS += \
         mainwindow.ui
 
 CONFIG += plugins_designer
+
+    LIBS +=`pkg-config opencv --libs`

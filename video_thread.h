@@ -3,6 +3,12 @@
 
 #include <QObject>
 #include <QThread>
+// AJOUTE PAR LAGUICHE --------------------------
+#include <QDebug>
+#include "opencv2/opencv.hpp"
+#include <opencv2/highgui.hpp>
+#include <opencv2/aruco.hpp>
+// ----------------------------------------------
 
 typedef struct
 {
@@ -30,6 +36,9 @@ public :
 
 private :
     QString m_video_name;
+// AJOUTE PAR LAGUICHE --------------------------
+    cv::VideoCapture * capture;
+// ----------------------------------------------
 
 public slots:
     void doWork(tVideoInput parameter);
