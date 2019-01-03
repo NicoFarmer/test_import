@@ -39,9 +39,23 @@ void VideoWorker::init(QString video_name)
          qDebug() << "Set height to 240 :" << ((capture->set(CV_CAP_PROP_FRAME_HEIGHT,240)) ? "OK" : "NOK");
          qDebug() << "Set width to 320 :" << ((capture->set(CV_CAP_PROP_FRAME_WIDTH,320)) ? "OK" : "NOK") << endl;
          cv::namedWindow( "capture", cv::WINDOW_AUTOSIZE );// Create a window for display.
+
+         //calibration de la caméra, il faudra passer le fichier en .ini
+         cv::FileStorage fs("cam_parameters_pc.txt", cv::FileStorage::READ);
+         if(fs.isOpened())
+         {
+         fs["camera_matrix"] >> camMatrix;
+         fs["distortion_coefficients"] >> distCoeffs;
+         bCalibrated=true;
+         }
+         else
+             bCalibrated=false;
+         markerLength=2.2;
      }
      else
          qDebug() << endl << "Caméra inopérante :-(" << endl;
+
+
 }
 
 // _________________________________________________________________
@@ -99,25 +113,37 @@ void VideoWorker::_video_process_algo1(tVideoInput parameter)
 
         std::vector<int> markerIds;
         std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
+        std::vector< cv::Vec3d > rvecs, tvecs;
         cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_6X6_250);
         cv::aruco::detectMarkers(inputImage, dictionary, markerCorners, markerIds);
-        if (m_dbg_active)
+
+        if (markerIds.size() > 0)
         {
-            if (markerIds.size() > 0)
+            //on dessine les marqueurs trouvés
+            if (m_dbg_active)
                 cv::aruco::drawDetectedMarkers(m_frameCloned, markerCorners, markerIds);
-
-            //on affiche l'image traitée
-            cv::imshow("capture",m_frameCloned);
-        }
-        QThread::msleep(5);
-        inputImage.release();
-
-        if (markerIds.size() != 0) {
+            //on estime leur position en 3D par rapport à la caméra
+            cv::aruco::estimatePoseSingleMarkers(markerCorners, markerLength, camMatrix, distCoeffs, rvecs,tvecs);
+            //on donne la valeur normale à la caméra dans la console pour cahque marqueur
+            /*for(unsigned int i = 0; i < markerIds.size(); i++)
+            {
+            cv::aruco::drawAxis(m_frameCloned, camMatrix, distCoeffs, rvecs[i], tvecs[i], markerLength * 0.5f);
+            qDebug() << 100*tvecs[0][2] << "cm";
+            }*/
+            cv::aruco::drawAxis(m_frameCloned, camMatrix, distCoeffs, rvecs[0], tvecs[0], markerLength * 0.5f);
+            result.result1 = 100*tvecs[0][2];
             result.markers_detected = markerIds;
             emit resultReady(result);
         }
 
-        //opencv ne profite pas du garbage collector de Qt
+        //on affiche l'image traitée
+        if (m_dbg_active)
+            cv::imshow("capture",m_frameCloned);
+
+        //QThread::msleep(5);
+        inputImage.release();
+
+       //opencv ne profite pas du garbage collector de Qt
         m_frame.release();
         m_frameCloned.release();
     }

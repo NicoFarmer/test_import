@@ -54,6 +54,10 @@ private :
 // ----------------------------------------------
     cv::Mat m_frame; //image du buffer video
     cv::Mat m_frameCloned;
+    cv::Mat camMatrix;
+    cv::Mat distCoeffs;
+    bool bCalibrated;
+    float markerLength;
 
 
 
